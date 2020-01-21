@@ -1,3 +1,13 @@
-# Node, Express, React.js, Graphql and MongoDB CRUD Web Application
+# CRUD using Node, Graphql, React.js, and MongoDB
 
-This source code is part of [Node, Express, React.js, Graphql and MongoDB CRUD Web Application](https://www.djamware.com/post/5cbd1e9a80aca754f7a9d1f2/node-express-reactjs-graphql-and-mongodb-crud-web-application) tutorial.
+# nodejs-graphql-reactjs
+
+Steps to run front-end
+1. cd web-client
+2. npm i
+3. npm start
+
+Steps to run back-end
+1. cd rest-client
+2. npm i
+3. 'nodemon' (to run along with reactjs) or 'node app.js' (only use node)
