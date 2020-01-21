@@ -22,93 +22,74 @@ const ADD_BOOK = gql`
 `;
 
 class Create extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            addDetails: {},
-        }
-    }
 
     render() {
-        // let title, author, description, published_year, publisher;
+        let title, author, description, published_year, publisher;
         return (
-            <Mutation
-                mutation={ADD_BOOK}
-                onCompleted={() => this.props.history.push('/')}
-            >
+            <Mutation mutation={ADD_BOOK} onCompleted={() => this.props.history.push('/')}>
                 {(addBook, { loading, error }) => (
                     <div className="container">
                         <div className="panel panel-default">
                             <div className="panel-heading">
                                 <h3 className="panel-title">
                                     ADD BOOK
-                                </h3>
+                            </h3>
                             </div>
                             <div className="panel-body">
                                 <h4><Link to="/" className="btn btn-primary">Book List</Link></h4>
-                                <form 
-                                    onSubmit={e => {
-                                        e.preventDefault();
-                                        addBook({
+                                <form onSubmit={e => {
+                                    e.preventDefault();
+                                    addBook(
+                                        {
                                             variables: {
-                                                title: this.state.title,
-                                                author: this.state.author,
-                                                description: this.state.description,
-                                                publisher: this.state.publisher,
-                                                published_year: parseInt(this.state.published_year),
+                                                title: title.value,
+                                                author: author.value,
+                                                description: description.value,
+                                                publisher: publisher.value,
+                                                published_year: parseInt(published_year.value),
                                             },
-                                        });
-                                        this.setState({ addDetails: {} });
-                                    }}
-                                >
+                                        },
+                                    );
+                                    title.value = '';
+                                    author.value = '';
+                                    description.value = '';
+                                    publisher.value = null;
+                                    published_year.value = '';
+                                }}>
                                     <div className="form-group">
                                         <label htmlFor="title">Title:</label>
                                         <input
                                             type="text"
                                             className="form-control"
                                             name="title"
-                                            ref={node => { this.setState({ title: node }) }}
-                                            placeholder="Title"
-                                        />
+                                            ref={node => {
+                                                this.state.addDetails.title = node;
+                                            }}
+                                        placeholder="Title" />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="author">Author:</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="author"
-                                            ref={node => { this.setState({ author: node }) }}
-                                            placeholder="Author"
-                                        />
+                                        <input type="text" className="form-control" name="author" ref={node => {
+                                            author = node;
+                                        }} placeholder="Author" />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="description">Description:</label>
-                                        <textarea
-                                            className="form-control"
-                                            name="description"
-                                            ref={node => { this.setState({ author: node }) }}
-                                            placeholder="Description" cols="80" rows="3"
-                                        />
+                                        <textarea className="form-control" name="description" ref={node => {
+                                            description = node;
+                                        }} placeholder="Description" cols="80" rows="3" />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="author">Publisher:</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="publisher"
-                                            ref={node => { this.setState({ publisher: node }) }}
-                                            placeholder="Publisher"
-                                        />
+                                        <input type="text" className="form-control" name="publisher" ref={node => {
+                                            publisher = node;
+                                        }} placeholder="Publisher" />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="author">Published Year:</label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            name="published_year"
-                                            ref={node => { this.setState({ published_year: node }) }}
-                                            placeholder="Published Year"
-                                        />
+                                        <input type="number" className="form-control" name="published_year" ref={node => {
+                                            published_year = node;
+                                        }} placeholder="Published Year" />
                                     </div>
                                     <button type="submit" className="btn btn-success">Submit</button>
                                 </form>

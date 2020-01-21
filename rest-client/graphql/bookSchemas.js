@@ -2,7 +2,6 @@ const {
     GraphQLSchema,
     GraphQLObjectType,
     GraphQLList,
-    GraphQLObjectType,
     GraphQLNonNull,
     GraphQLID,
     GraphQLString,

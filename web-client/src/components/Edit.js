@@ -5,7 +5,7 @@ import { Query, Mutation } from 'react-apollo';
 
 const GET_BOOK = gql`
     query book($bookId: String) {
-        book(id: $bookId) {
+        book(_id: $bookId) {
             _id
             title
             author
@@ -19,14 +19,14 @@ const GET_BOOK = gql`
 
 const UPDATE_BOOK = gql`
     mutation updateBook(
-        $id: String!,
+        $_id: String!,
         $title: String!,
         $author: String!,
         $description: String!,
         $publisher: String!,
         $published_year: Int!) {
         updateBook(
-        id: $id,
+        _id: $_id,
         title: $title,
         author: $author,
         description: $description,
@@ -42,26 +42,30 @@ class Edit extends Component {
     render() {
         let title, author, description, published_year, publisher;
         return (
-            <Query query={GET_BOOK} variables={{ bookId: this.props.match.params.id }}>
+            <Query query={GET_BOOK} variables={{ bookId: this.props.match.params._id }}>
                 {({ loading, error, data }) => {
                     if (loading) return 'Loading...';
                     if (error) return `Error! ${error.message}`;
 
                     return (
-                        <Mutation mutation={UPDATE_BOOK} key={data.book._id} onCompleted={() => this.props.history.push(`/`)}>
+                        <Mutation
+                            mutation={UPDATE_BOOK}
+                            key={data.book._id}
+                            onCompleted={() => this.props.history.push(`/`)}
+                        >
                             {(updateBook, { loading, error }) => (
                                 <div className="container">
                                     <div className="panel panel-default">
                                         <div className="panel-heading">
                                             <h3 className="panel-title">
                                                 EDIT BOOK
-                                        </h3>
+                                            </h3>
                                         </div>
                                         <div className="panel-body">
                                             <h4><Link to="/" className="btn btn-primary">Book List</Link></h4>
                                             <form onSubmit={e => {
                                                 e.preventDefault();
-                                                updateBook({ variables: { id: data.book._id, title: title.value, author: author.value, description: description.value, publisher: publisher.value, published_year: parseInt(published_year.value) } });
+                                                updateBook({ variables: { _id: data.book._id, title: title.value, author: author.value, description: description.value, publisher: publisher.value, published_year: parseInt(published_year.value) } });
                                                 title.value = '';
                                                 author.value = '';
                                                 description.value = '';

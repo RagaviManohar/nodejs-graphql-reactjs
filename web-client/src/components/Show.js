@@ -6,7 +6,7 @@ import { Query, Mutation } from 'react-apollo';
 
 const GET_BOOK = gql`
     query book($bookId: String) {
-        book(id: $bookId) {
+        book(_id: $bookId) {
             _id
             title
             author
@@ -19,8 +19,8 @@ const GET_BOOK = gql`
 `;
 
 const DELETE_BOOK = gql`
-  mutation removeBook($id: String!) {
-    removeBook(id:$id) {
+  mutation removeBook($_id: String!) {
+    removeBook(_id:$_id) {
       _id
     }
   }
@@ -30,7 +30,7 @@ class Show extends Component {
 
     render() {
         return (
-            <Query pollInterval={500} query={GET_BOOK} variables={{ bookId: this.props.match.params.id }}>
+            <Query pollInterval={500} query={GET_BOOK} variables={{ bookId: this.props.match.params._id }}>
                 {({ loading, error, data }) => {
                     if (loading) return 'Loading...';
                     if (error) return `Error! ${error.message}`;
@@ -63,7 +63,7 @@ class Show extends Component {
                                                 <form
                                                     onSubmit={e => {
                                                         e.preventDefault();
-                                                        removeBook({ variables: { id: data.book._id } });
+                                                        removeBook({ variables: { _id: data.book._id } });
                                                     }}>
                                                     <Link to={`/edit/${data.book._id}`} className="btn btn-success">Edit</Link>&nbsp;
                                                 <button type="submit" className="btn btn-danger">Delete</button>
